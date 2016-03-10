@@ -1,0 +1,5 @@
+ec2ssh.egg-info
+build
+data
+dist
+.idea
