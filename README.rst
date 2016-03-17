@@ -20,4 +20,9 @@ What it's curretly lacking:
 * It does not check for any kind of error or exception
 * It's not a Python module yet, it's just a .py script file; ideally it will install itself via pip in the Python modules folder (the identity files will be saved there too)
 
+ec2ssh add <connection_name>        => to add a connection name
+ec2ssh connect <connection_name>    => connect to ec2
+ec2ssh ls                           => to list avaible connections
+ec2ssh rm <connection_name>         => remove a connection
+
 Feel free to contribute or comment my code!

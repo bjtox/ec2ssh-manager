@@ -7,6 +7,8 @@ from os.path import expanduser
 import os
 import glob
 
+import argparse
+
 
 hosts_folder = expanduser("~")
 
@@ -112,6 +114,7 @@ def rm_connecition(args):
 
 
 def main():
+
   if not os.path.exists(directory_to_save):
     os.makedirs(directory_to_save)
   args = sys.argv
