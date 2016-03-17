@@ -22,9 +22,9 @@ What it's curretly lacking:
 
 commands:
 
-* ec2ssh add <connection_name>        => to add a connection name
-* ec2ssh connect <connection_name>    => connect to ec2
+* ec2ssh add 'connection_name'        => to add a connection name
+* ec2ssh connect 'connection_name'    => connect to ec2
 * ec2ssh ls                           => to list avaible connections
-* ec2ssh rm <connection_name>         => remove a connection
+* ec2ssh rm 'connection_name'         => remove a connection
 
 Feel free to contribute or comment my code!
