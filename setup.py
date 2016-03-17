@@ -14,7 +14,7 @@ setup(
     # Versions should comply with PEP440.  For a discussion on single-sourcing
     # the version across setup.py and the project code, see
     # https://packaging.python.org/en/latest/single_source_version.html
-    version='1.2.1',
+    version='1.2.5',
 
     description='connect to ec2',
     long_description=long_description,
@@ -25,6 +25,7 @@ setup(
     # Author details
     author='Antonio Bitonti',
     author_email='antonio.bitonti@gmail.com',
+    packages=['ec2ssh'],
 
     # Choose your license
     license='MIT',

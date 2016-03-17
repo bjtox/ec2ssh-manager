@@ -1,30 +1,31 @@
 import subprocess
-import sys
 import boto3
+import sys
 import configparser
+from codecs import open
+from os.path import expanduser
 import os
+import glob
 
-#class ec2ssh:
 
+hosts_folder = expanduser("~")
 
-#conn = ec2ssh()
-
-#print(sys.argv[1])
-#conn.main(sys.argv[1])
+directory_to_save = hosts_folder+'/.ec2ssh/hosts/'
 
 def read_config(host):
-  config = configparser.ConfigParser()
-  config.sections()
-  config.read(host+'.ini')
-  return(config);
+  if os.path.isfile(directory_to_save+host+'.ini'):
+    config = configparser.ConfigParser()
+    config.sections()
+    config.read(directory_to_save+host+'.ini')
+    return(config);
+  else:
+    sys.exit("File Host doesn't exist")
+
 
 def addConfig(args):
+
   config = configparser.ConfigParser()
-
   printMenu()
-
-  is_valid=0
-
   valid_choise=0
   usr_input = ''
   while usr_input not in ['1', '2']:
@@ -35,20 +36,24 @@ def addConfig(args):
 
   if usr_input == "1":
     config['EC2INSTANCE'] = {}
-    config['EC2INSTANCE']['pem_path'] = input('Enter a pem file path: ')
-    config['EC2INSTANCE']['user'] = input('Enter a user: ')
+    config['EC2INSTANCE']['pem_path'] = input('Enter a pem file path (absolute path): ')
+    config['EC2INSTANCE']['user'] = input('Enter a user (default "ec2-user"): ')
     config['EC2INSTANCE']['ec2_instance_id'] = input('Enter a Instance ID: ')
   elif usr_input == "1":
     config['EC2INSTANCE'] = {}
-    config['EC2INSTANCE']['pem_path'] = input('Enter a pem file path: ')
-    config['EC2INSTANCE']['user'] = input('Enter a user: ')
+    config['EC2INSTANCE']['pem_path'] = input('Enter a pem file path (absolute path): ')
+    config['EC2INSTANCE']['user'] = input('Enter a user (default "ec2-user"): ')
     config['EC2INSTANCE']['ec2_instance_id'] = input('Enter a Instance ID: ')
     config['BASTIONHOST'] = {}
-    config['BASTIONHOST']['b_pem_path'] = input('Enter a Bastion pem file path: ')
+    config['BASTIONHOST']['b_pem_path'] = input('Enter a Bastion pem file path (absolute path): ')
     config['BASTIONHOST']['b_user'] = input('Enter a Bastion user: ')
     config['BASTIONHOST']['b_ec2_instance_id'] = input('Enter a Bastion Instance ID: ')
 
-  with open(args[2]+'.ini', 'w') as configfile:
+
+  if not config['EC2INSTANCE']['user']:
+      config['EC2INSTANCE']['user'] = 'ec2-user'
+
+  with open(directory_to_save+args[2]+'.ini', 'w') as configfile:
     config.write(configfile)
 
   print("File Config "+args[2]+" created")
@@ -81,16 +86,30 @@ def ec2ssh(args):
 
   else:
     target_ip = target_response['Reservations'][0]['Instances'][0]['PublicIpAddress']
-
     subprocess.call("ssh-add {}".format(target['key']), shell=True)
     subprocess.call("ssh {}@{}".format(target['user'], target_ip), shell=True)
 
+def list_avaible_connection(args):
+  print (30 * '-')
+  for file in os.listdir(directory_to_save):
+    if file.endswith(".ini"):
+        name_file = file.replace('.ini','')
+        print("File Name: "+name_file)
+        config = read_config(name_file)
+        print("Key Pair: "+config['EC2INSTANCE']['pem_path'])
+        print("User Pair: "+config['EC2INSTANCE']['user'])
+        print("Instance Id Pair: "+config['EC2INSTANCE']['ec2_instance_id'])
+
+    print (30 * '-')
 
 
 def main():
+  if not os.path.exists(directory_to_save):
+    os.makedirs(directory_to_save)
   args = sys.argv
   switcher = {
     "add":addConfig,
-    "connect": ec2ssh
+    "connect": ec2ssh,
+    "ls": list_avaible_connection
   }
   return switcher[args[1]](args)
