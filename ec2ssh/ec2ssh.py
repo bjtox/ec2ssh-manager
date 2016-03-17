@@ -102,6 +102,14 @@ def list_avaible_connection(args):
 
     print (30 * '-')
 
+def rm_connecition(args):
+  try:
+    os.remove(directory_to_save+args[2]+'.ini')
+    print(args[2]+" connection was removed!")
+  except OSError:
+    print(args[2]+" connection doesn't exist!")
+    pass
+
 
 def main():
   if not os.path.exists(directory_to_save):
@@ -110,6 +118,7 @@ def main():
   switcher = {
     "add":addConfig,
     "connect": ec2ssh,
-    "ls": list_avaible_connection
+    "ls": list_avaible_connection,
+    "rm": rm_connecition
   }
   return switcher[args[1]](args)
