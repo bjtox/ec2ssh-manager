@@ -138,7 +138,6 @@ class Connector:
     subprocess.call("ssh -t -A {}@{} -p {} ssh {}@{}".format(bastion['user'], bastion_ip,self.port, target['user'], target_ip), shell=True)
 
   def ec2ssh(self,args):
-
     config = self.read_config(args[2])
     if config['Connection']['type'] == "direct":
       self.direct_connect(config['EC2INSTANCE'])

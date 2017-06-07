@@ -14,13 +14,13 @@ setup(
     # Versions should comply with PEP440.  For a discussion on single-sourcing
     # the version across setup.py and the project code, see
     # https://packaging.python.org/en/latest/single_source_version.html
-    version='2.0.0',
+    version='2.0.2',
 
-    description='connect to ec2',
+    description='Manage all your connects to AWS ec2',
     long_description=long_description,
 
     # The project's main homepage.
-    url='https://github.com/bjtox/python_module_test.git',
+    url='https://github.com/bjtox/ec2ssh-manager',
 
     # Author details
     author='Antonio Bitonti',
@@ -36,7 +36,7 @@ setup(
         #   3 - Alpha
         #   4 - Beta
         #   5 - Production/Stable
-        'Development Status :: 4 - Beta',
+        'Development Status :: 5 - Production/Stable',
 
         # Indicate who your project is intended for
         # 'Intended Audience :: Developers',
