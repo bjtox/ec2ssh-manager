@@ -55,7 +55,7 @@ setup(
 
     # What does your project relate to?
     keywords='aws ec2 ssh bastion_host',
-    install_requires=['boto3','inquirer'],
+    install_requires=['boto3'],
 
     # List additional groups of dependencies here (e.g. development
     # dependencies). You can install these using the following syntax,
