@@ -24,13 +24,11 @@ Usage: ec2ssh [command] [name] [options] arg1 arg2
 AWS configuration is REQUIRED
 
 Options:
-  -h, --help            show this help message and exit
-  -c, --commands        list all Commands
-  -p PROFILE_NAME, --profile=PROFILE_NAME
-                        use Specific Profile
-  -r REGION_NAME, --region=REGION_NAME
-                        MANDATORY - use Specific Region
-  -P PORT, --port=PORT  Specify Port
+-h, --help            show this help message and exit
+-c, --commands        list all Commands
+-p PROFILE_NAME, --profile=PROFILE_NAME use Specific Profile
+-r REGION_NAME, --region=REGION_NAME MANDATORY - use Specific Region
+-P PORT, --port=PORT  Specify Port
 
 commands:
 
