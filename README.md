@@ -20,6 +20,18 @@ What it's curretly lacking:
 * It does not check for any kind of error or exception
 * It's not a Python module yet, it's just a .py script file; ideally it will install itself via pip in the Python modules folder (the identity files will be saved there too)
 
+Usage: ec2ssh [command] [name] [options] arg1 arg2
+AWS configuration is REQUIRED
+
+Options:
+  -h, --help            show this help message and exit
+  -c, --commands        list all Commands
+  -p PROFILE_NAME, --profile=PROFILE_NAME
+                        use Specific Profile
+  -r REGION_NAME, --region=REGION_NAME
+                        MANDATORY - use Specific Region
+  -P PORT, --port=PORT  Specify Port
+
 commands:
 
 * ec2ssh add 'connection_name'        => to add a connection name
