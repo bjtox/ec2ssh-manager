@@ -1,34 +1,34 @@
 # ec2ssh
-Python script to facilitate SSH access to AWS EC2 instances with dynamic IPs or behind bastion hosts
+Ec2ssh allows you to easily manage all its ssh connections to instances hosted on AWS.
 
-ec2ssh uses subprocess.call to connect via SSH to EC2 instances on Amazon Web Services and Boto 3 to get the curret public static IP address of the instance.
-This way you don't have to allocate an Elastic IP Address to conveniently connect via SSH to the instance, or repeatedly check it's current static IP address.
+# Features
+* Create a direct Conncetion to EC2 Instances
+* Create a tunneling connection to EC2 Instance passing by an a BastionHost
+* Create a connection to an ASG passing by an a BastionHost
+* Using differente AWS cli profiles
+* Specify Region connection
+* Add/Remove connection easly
 
-This script is in extremely early stage, but it works (I'm currently using it). It's mostly a way for me to start using and learning Python.
+## Requirement
+There are a small list of requirement:
+* Python 3
+* Pip
+* AWS cli configured 
 
-To get the static IP address of the instance and connect you have to provide the program with an identity file with the following information:
-* Path to the key pair file for the host
-* User
-* EC2 Instance ID
 
-Also, Boto 3 must be able to call the AWS EC2 API, which requires AWS credentials. Ideally, you should install the AWS CLI (sudo pip install awscli) and configure it with your credentials (aws configure).
+## Usage
+Ec2ssh use a series of infomation to connect with the Ec2 Instance. To configure the connection, depending on the type you want to use, you must provide the Instance ID, its region the PEM key and the user to connect to.
 
-ec2ssh also supports SSH connections via a bastion host, in which case the identity file must also contain the path to the bastion host key pair, the user for the bastion host and the EC2 Instance ID of the bastion host.
+For Example for connect to ASG you need to provide:
+* EC2 KeyPair Pem File
+* EC2 UserName for ssh connection
+* ASG Name
+* Bastion Pem
+* Bastion User
+* Bastion Instance Id
 
-What it's curretly lacking:
-* A cli command to create a new identity file (which will ask you if you are using a bastion host or not, followed by the required data)
-* It does not check for any kind of error or exception
-* It's not a Python module yet, it's just a .py script file; ideally it will install itself via pip in the Python modules folder (the identity files will be saved there too)
 
-Usage: ec2ssh [command] [name] [options] arg1 arg2
-AWS configuration is REQUIRED
-
-Options:
-* -h, --help            show this help message and exit
-* -c, --commands        list all Commands
-* -p PROFILE_NAME, --profile=PROFILE_NAME use Specific Profile
-* -r REGION_NAME, --region=REGION_NAME MANDATORY - use Specific Region
-* -P PORT, --port=PORT  Specify Port
+Below the available commands and parameters
 
 commands:
 
@@ -36,5 +36,17 @@ commands:
 * ec2ssh connect 'connection_name'    => connect to ec2
 * ec2ssh ls                           => to list avaible connections
 * ec2ssh rm 'connection_name'         => remove a connection
+
+
+Usage: ec2ssh [command] [name] [options] arg1 arg2
+AWS configuration is REQUIRED
+Options:
+* -h, --help            show this help message and exit
+* -c, --commands        list all Commands
+* -p PROFILE_NAME, --profile=PROFILE_NAME use Specific Profile
+* -r REGION_NAME, --region=REGION_NAME MANDATORY - use Specific Region
+* -P PORT, --port=PORT  Specify Port
+
+
 
 Feel free to contribute or comment my code!
