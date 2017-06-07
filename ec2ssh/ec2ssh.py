@@ -7,12 +7,9 @@ from os.path import expanduser
 import os
 import glob
 import inquirer
-
 import argparse
 
-
 class Connector:
-
   def __init__(self, region, profile, port):
     self.hosts_folder = expanduser("~")
     self.directory_to_save = self.hosts_folder+'/.ec2ssh/hosts/'
@@ -25,7 +22,6 @@ class Connector:
         self.client = self.session.client('ec2',region_name=self.region_name)
       else:
         self.client = boto3.client('ec2',region_name=self.region_name)
-
 
   def printMenu(self):
     print (30 * '-')
@@ -110,20 +106,14 @@ class Connector:
       config['ASG']['name'] = input('Enter a ASG Name ID:\n-> ')
       if not config['ASG']['user']:
         config['ASG']['user'] = 'ec2-user'
-
       questions = self.query_yes_no("ASG allow ssh only from Bastion Host?")
-
       if questions == True:
         config['BASTIONHOST'] = {}
         config['BASTIONHOST']['b_pem_path'] = input('Enter a Bastion pem file path (absolute path):\n-> ')
         config['BASTIONHOST']['b_user'] = input('Enter a Bastion user:\n-> ')
         config['BASTIONHOST']['b_ec2_instance_id'] = input('Enter a Bastion Instance ID:\n-> ')
-
-    
-
     with open(self.directory_to_save+args[2]+'.ini', 'w') as configfile:
       config.write(configfile)
-
     print("File Config "+args[2]+" created")
 
   def direct_connect(self,ec2_instance_config):
@@ -152,21 +142,16 @@ class Connector:
     config = self.read_config(args[2])
     if config['Connection']['type'] == "direct":
       self.direct_connect(config['EC2INSTANCE'])
-
     elif config['Connection']['type'] == "bastion":
       self.bastion_connect(config['EC2INSTANCE'], config['BASTIONHOST'])
-
     elif config['Connection']['type'] == "asg":
-
       print ('Please select an option:')
       i=1
       selects = {}
       for instance in self.list_instance_in_asg(config['ASG']['name']):
-
         print ("   "+str(i)+". "+instance['InstanceId'])
         selects[i]=instance['InstanceId']
         i+=1
-
       config_asg = {}
       choise = input('Enter Value: ')
       config_asg['pem_path']=config['ASG']['pem_path']
@@ -180,10 +165,6 @@ class Connector:
         self.bastion_connect(config_asg, config_asg_bastion)
       else:
         self.direct_connect(config_asg)
-
-      
-        
-      
 
   def list_avaible_connection(self,args):
     print (30 * '-')
@@ -207,7 +188,6 @@ class Connector:
             print(" User Pair: "+config['ASG']['user'])
             print(" ASG Name: "+config['ASG']['name'])
             print(" Bastion Id: "+config['BASTIONHOST']['b_ec2_instance_id'])
-
       print (30 * '-')  
 
   def list_instance_in_asg(self, asg_name):
@@ -215,13 +195,11 @@ class Connector:
       asg_client = self.session.client('autoscaling',region_name=self.region_name)
     else:
       asg_client = boto3.client('autoscaling',region_name=self.region_name)
-
     response = asg_client.describe_auto_scaling_groups(
       AutoScalingGroupNames=[
           asg_name,
       ]
     )
-
     return response['AutoScalingGroups'][0]['Instances']
 
 
@@ -233,13 +211,9 @@ class Connector:
       print(args[2]+" connection doesn't exist!")
       pass
 
-
   def main(self,args):
-
     if not os.path.exists(self.directory_to_save):
       os.makedirs(directory_to_save)
-
-
     args = sys.argv
     switcher = {
       "add":self.addConfig,
