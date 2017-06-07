@@ -156,7 +156,7 @@ class Connector:
       config_asg['pem_path']=config['ASG']['pem_path']
       config_asg['user']=config['ASG']['user']
       config_asg['ec2_instance_id']=selects[int(choise)]
-      if config.has_section(BASTIONHOST):
+      if config.has_section('BASTIONHOST'):
         config_asg_bastion = {}
         config_asg_bastion['b_pem_path']=config['BASTIONHOST']['b_pem_path']
         config_asg_bastion['b_user']=config['BASTIONHOST']['b_user']
