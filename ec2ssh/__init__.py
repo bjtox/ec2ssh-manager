@@ -13,29 +13,32 @@ def main():
                       help="list all Commands", metavar="Commands")
   parser.add_option("-p", "--profile", dest="profile", default='default',
                     help="use Specific Profile", metavar="PROFILE_NAME")
-  parser.add_option("-r", "--region", dest="region",
-                    help="MANDATORY - use Specific Region", metavar="REGION_NAME")
-  parser.add_option("-P", "--port",
-                    dest="port", default='22',
-                    help="Specify Port")
+  parser.add_option("-n", "--connection-name", dest="connection_name",
+                    help="MANDATORY - use Specific connection name", metavar="CONNECTION_NAME")
 
   (options, args) = parser.parse_args()
 
   if options.commands:   # if filename is not given
     print ("Command List:")
-    print ("  add 'connection_name'        => to add a connection name")
-    print ("  connect 'connection_name'    => connect to ec2")
+    print ("  add -n 'connection_name'        => to add a connection name")
+    print ("  connect -n 'connection_name'    => connect to ec2")
     print ("  ls                           => to list avaible connections")
-    print ("  rm 'connection_name'         => remove a connection")
+    print ("  rm -n 'connection_name'         => remove a connection")
 
   
   else:
     if sys.argv[1] == "connect":
-      if not options.region:   # if filename is not given
-        parser.error('Region not given')
+      if not options.connection_name:   # if filename is not given
+        parser.error('Connection Name not given')
     
+    connector = ec2ssh.Connector(options.connection_name, options.profile)
 
-
-    connector = ec2ssh.Connector(options.region, options.profile, options.port)
-    connector.main(sys.argv)
     
+    args = sys.argv
+    switcher = {
+      "add":connector.addConfig,
+      "connect": connector.ec2ssh,
+      "ls": connector.list_avaible_connection,
+      "rm": connector.rm_connecition
+    }
+    return switcher[args[1]]()

@@ -9,11 +9,15 @@ Ec2ssh allows you to easily manage all its ssh connections to instances hosted o
 * Specify Region connection
 * Add/Remove connection easly
 
+# New Feature
+* provide multiterm whit TMUX, now you can connect whit all your ASG instaces whit 1 command
+
 ## Requirement
 There are a small list of requirement:
 * Python 3
 * Pip
 * AWS cli configured 
+* tmux
 
 
 ## Usage
@@ -44,8 +48,6 @@ Options:
 * -h, --help            show this help message and exit
 * -c, --commands        list all Commands
 * -p PROFILE_NAME, --profile=PROFILE_NAME use Specific Profile
-* -r REGION_NAME, --region=REGION_NAME MANDATORY - use Specific Region
-* -P PORT, --port=PORT  Specify Port
 
 
 
