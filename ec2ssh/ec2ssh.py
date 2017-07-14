@@ -15,10 +15,11 @@ class Connector:
   def __init__(self, connection_name, profile):
 
     self.hosts_folder = expanduser("~")
+    print(self.hosts_folder)
     self.profile = profile
     self.directory_to_save = self.hosts_folder+'/.ec2ssh/hosts/'
     if not os.path.exists(self.directory_to_save):
-      os.makedirs(directory_to_save)
+      os.makedirs(self.directory_to_save)
 
     
     if connection_name != None: 
